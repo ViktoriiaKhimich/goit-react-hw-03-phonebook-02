@@ -9,14 +9,22 @@ import ContactList from './components/ContactList'
 
 class App extends Component {
     state = {
-        contacts: [
-            {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-            {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-            {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-            {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-        ],
+        contacts: [],
         filter: "",
         errorMessage: ""
+    }
+
+    componentDidMount() {
+        const contactList = JSON.parse(localStorage.getItem('contacts'))
+        this.setState({
+            contacts: contactList || []
+        })
+    }
+
+    componentDidUpdate() {
+        const {contacts} = this.state;
+        const productList = JSON.stringify(contacts);
+        localStorage.setItem('contacts', productList)
     }
 
     addContact = ({name, number}) => {
@@ -69,8 +77,11 @@ class App extends Component {
         const {addContact, handleFilter, handleDelete} = this;
         const {filter, contacts, errorMessage} = this.state;
 
+
+
         const normalizedFilter = filter.toLowerCase();
         const filteredContacts = contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter))
+        console.log(filteredContacts);
 
         return (
         <div>
@@ -87,6 +98,4 @@ class App extends Component {
     }
 }
 
-
- 
 export default App;

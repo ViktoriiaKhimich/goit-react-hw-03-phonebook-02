@@ -26,6 +26,8 @@ class ContactFrom extends Component {
 
     }
 
+    
+
     reset = () =>  {
         this.setState({
             name: '',
